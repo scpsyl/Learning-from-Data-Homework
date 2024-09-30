@@ -1,0 +1,217 @@
+\documentclass[12pt]{article}
+
+% Package for encoding and language support
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+
+% Page margins
+\geometry{a4paper, margin=1in}
+
+% Header and footer
+\setlength{\headheight}{14.49998pt}
+\addtolength{\topmargin}{-2.49998pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Learning from Data - Writing Assignment 1}
+\fancyhead[R]{Yushan Liu}
+\fancyfoot[C]{\thepage}
+
+% Title information
+
+\begin{document}
+
+\title{Writing Assignment 1}
+\author{Yushan Liu  \ \  Student ID: 2024214103}
+\date{\today}
+
+\maketitle
+
+\section*{Problem 1.1: Logistic Regression}
+
+\subsection*{(a) Sigmoid Function}
+
+The sigmoid function is defined as:
+\[
+    \sigma(z) = \frac{1}{1 + e^{-z}}
+\]
+
+We can rewrite the sigmoid function as:
+\[
+    \sigma(z) = \frac{e^z}{1 + e^z} = 1 - \frac{1}{1 + e^z}
+\]
+
+Then the derivative of the sigmoid function with respect to \( z \) is:
+\[
+    \frac{d}{dz} \sigma(z) = \frac{d}{dz} \left( 1 - \frac{1}{1 + e^z} \right) = \frac{e^z}{(1 + e^z)^2} = \frac{1}{1 + e^z} \cdot \frac{e^z}{1 + e^z} = \sigma(z) \cdot (1 - \sigma(z))
+\]
+
+Thus, the derivative of the sigmoid function with respect to \( z \) is:
+\[
+    \frac{d}{dz} \sigma(z) = \sigma(z) \cdot (1 - \sigma(z))
+\]
+
+\subsection*{(b) Log-Likelihood Function}
+
+The log-likelihood function for logistic regression is given by:
+\[
+    \ell(\boldsymbol{\theta}) = \sum_{i=1}^{m} \left( y^{(i)} \log \sigma(\boldsymbol{\theta}^\top \boldsymbol{x}^{(i)}) + (1 - y^{(i)}) \log(1 - \sigma(\boldsymbol{\theta}^\top \boldsymbol{x}^{(i)})) \right)
+\]
+
+Since the log-likelihood is a sum over individual training examples, we can focus on the derivative for a single example \(i\):
+\[
+    \ell_i(\boldsymbol\theta) = y^{(i)} \log \sigma(\boldsymbol\theta^\top x^{(i)}) + (1 - y^{(i)}) \log(1 - \sigma(\boldsymbol\theta^\top x^{(i)}))
+\]
+
+The derivative of the first term \(y^{(i)} \log \sigma(\boldsymbol\theta^\top x^{(i)})\) is:
+
+\newpage
+\[
+    \frac{\partial}{\partial \boldsymbol\theta_j} \left( y^{(i)} \log \sigma(\boldsymbol\theta^\top x^{(i)}) \right)
+    = y^{(i)} \cdot \frac{1}{\sigma(\boldsymbol\theta^\top x^{(i)})} \cdot \sigma'(\boldsymbol\theta^\top x^{(i)}) \cdot x_j^{(i)}
+\]
+\[
+    = y^{(i)} \cdot (1 - \sigma(\boldsymbol\theta^\top x^{(i)})) \cdot x_j^{(i)}
+\]
+
+The derivative of the second term \((1 - y^{(i)}) \log(1 - \sigma(\boldsymbol\theta^\top x^{(i)}))\) is:
+\[
+\frac{\partial}{\partial \boldsymbol\theta_j} \left( (1 - y^{(i)}) \log(1 - \sigma(\boldsymbol\theta^\top x^{(i)})) \right)
+= (1 - y^{(i)}) \cdot \frac{-1}{1 - \sigma(\boldsymbol\theta^\top x^{(i)})} \cdot (-\sigma'(\boldsymbol\theta^\top x^{(i)})) \cdot x_j^{(i)}
+\]
+\[
+    = (1 - y^{(i)}) \cdot (- \sigma(\boldsymbol\theta^\top x^{(i)})) \cdot x_j^{(i)}
+\]
+
+Then combine the two terms and simplify, we have:
+\[
+    \frac{\partial}{\partial \boldsymbol\theta_j}\ell_i(\boldsymbol\theta) = (y^{(i)} - \sigma(\boldsymbol\theta^\top x^{(i)})) \cdot x_j^{(i)}
+\]
+
+Summing over all training examples \(i = 1, \ldots, m\), we obtain the desired result:
+\[
+\frac{\partial \ell(\boldsymbol\theta)}{\partial \boldsymbol\theta_j} = \sum_{i=1}^{m} \left( y^{(i)} - \sigma(\boldsymbol\theta^\top x^{(i)}) \right) x_j^{(i)}
+\]
+
+\section*{Problem 1.2: Ridge Regression}
+
+\subsection*{(a) Gradient of the Ridge Regression Loss}
+
+We are given the ridge regression loss function:
+\[
+J(\boldsymbol\theta) \triangleq \| \boldsymbol y - X \boldsymbol\theta \|^2 + \lambda \|\boldsymbol\theta\|^2
+\]
+
+To compute the gradient with respect to \( \theta \), we first note that the loss function can be expanded as:
+\[
+J(\boldsymbol\theta) = (\boldsymbol y - X\boldsymbol\theta)^\top (y - X\boldsymbol\theta) + \lambda \boldsymbol\theta^\top \boldsymbol\theta
+\]
+
+Now, differentiating \( J(\boldsymbol\theta) \) with respect to \( \boldsymbol\theta \), we get:
+\[
+\nabla_{\boldsymbol\theta} J(\boldsymbol\theta) = -2X^\top(\boldsymbol y - X \boldsymbol\theta) + 2\lambda\boldsymbol\theta
+\]
+
+Thus, the gradient is:
+\[
+\nabla_{\boldsymbol\theta} J(\boldsymbol\theta) = 2X^\top X \boldsymbol\theta - 2X^\top \boldsymbol y + 2\lambda \boldsymbol\theta
+\]
+
+\subsection*{(b) Gradient Descent Update Rule}
+
+Using the gradient computed above, the update rule for gradient descent is:
+\[
+\theta_{t+1} \colon= \theta_{t} + \alpha \nabla_\theta J(\theta)
+\]
+
+Substituting the gradient, we have:
+\[
+    \theta_{t+1} \colon= \theta_{t} + \alpha \left( 2X^\top X \theta_t - 2X^\top \boldsymbol y + 2\lambda \theta_t \right)
+\]
+
+\subsection*{(c) Optimal Solution Using the Normal Equation}
+
+The optimal parameter \( \boldsymbol\theta^* \) can be derived by setting the gradient to zero:
+\[
+2X^\top X \boldsymbol\theta^* - 2X^\top \boldsymbol y + 2\lambda \boldsymbol\theta^* = 0
+\]
+
+Simplifying, we get the normal equation:
+\[
+(X^\top X +\lambda \boldsymbol I)\boldsymbol\theta^* = X^\top \boldsymbol y
+\]
+
+Solving for \( \theta^* \), we obtain:
+\[
+    \boldsymbol\theta^* = (X^\top X + \lambda \boldsymbol I)^{-1} X^\top \boldsymbol y
+\]
+
+
+\section*{Problem 1.3: Poisson Distribution and Generalized Linear Model (GLM)}
+
+\subsection*{(a) Exponential Family Form of the Poisson Distribution}
+
+The probability mass function of the Poisson distribution is given by:
+\[
+p(y \mid \lambda) = \frac{\lambda^y e^{-\lambda}}{y!}
+\]
+
+We have knowed that a class of distributions is in the exponential family if its density can be
+written in the canonical form:
+\[
+p(y \mid \eta) = h(y) \exp\left( \eta T(y) - a(\eta) \right)
+\]
+
+Rewriting in the exponential family form for the Poisson distribution, we have:
+\[
+p(y \mid \eta) = \frac{1}{y!} \exp\left( \eta y - e^{\eta} \right)
+\]
+
+We can see that:
+
+\begin{itemize}
+    \item \( \eta = \log(\lambda) \) is the natural parameter.
+    \item \( T(y) = y \) is the sufficient statistic.
+    \item \( a(\eta) = e^{\eta} \) is the log-partition function.
+    \item \( b(y) = \frac{1}{y!} \) normalizes the distribution.
+\end{itemize}
+
+\subsection*{(b) GLM for Poisson Regression}
+From solving \textbf{(a)}, we know that:  
+
+\begin{itemize}
+    \item \( \eta = \log(\lambda) \) is the natural parameter.
+    \item \( T(y) = y \) is the sufficient statistic.
+\end{itemize}
+
+By deriving hypothesis function from the exponential family form, we have:
+\[
+h_\theta(x) = E[T(y)|x; \theta]= \lambda = \eta
+\]
+
+To adopt linear model \(\eta = \theta^T x\), we have:
+\[
+    \log (\lambda) = \eta = \theta^T X
+\]
+\[
+    h_\theta(x) = e^{\theta^\top x}
+\]
+
+Thus, we can conclude that:
+\begin{itemize}
+    \item \textbf{Hypothesis function}: \( h_\theta(x) = e^{\theta^\top x} \), where \( \theta^\top x \) is the linear combination of the input features \( x \).
+    \item \textbf{Canonical link function}: \( g(\lambda) = \log(\lambda) \), which relates the rate parameter \( \lambda \) to the natural parameter \( \eta = \theta^\top x \).
+    \item \textbf{Inverse canonical link function}: \( g^{-1}(\eta) = e^{\eta} \), which transforms the natural parameter \( \eta \) back into the rate parameter \( \lambda \).
+\end{itemize}
+
+\section*{Problem 1.4: Softmax Regression}
+
+
+
+\end{document}
