@@ -1,6 +1,8 @@
 \documentclass[12pt]{article}
 
 % Package for encoding and language support
+\usepackage{indentfirst}
+
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -9,6 +11,9 @@
 \usepackage{graphicx}
 \usepackage{fancyhdr}
 \usepackage{enumitem}
+
+
+
 
 % Page margins
 \geometry{a4paper, margin=1in}
@@ -19,7 +24,7 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{Learning from Data - Writing Assignment 1}
+\fancyhead[L]{Learning from Data - WA 1}
 \fancyhead[R]{Yushan Liu}
 \fancyfoot[C]{\thepage}
 
@@ -27,11 +32,15 @@
 
 \begin{document}
 
-\title{Writing Assignment 1}
-\author{Yushan Liu  \ \  Student ID: 2024214103}
-\date{\today}
-
-\maketitle
+\begin{titlepage}
+    \begin{center}
+        % 插入图标
+        \includegraphics[width=4cm]{tsinghua_logo.png}\\[2cm]  % 插入图标并设置下方间距
+        {\Huge Writing Assignment 1} \\[2cm]
+        {\large Yushan Liu  \ \  Student ID: 2024214103}\\[5cm]
+        {\normalsize \today}\\[1cm]
+    \end{center}
+\end{titlepage}
 
 \section*{Problem 1.1: Logistic Regression}
 
@@ -71,7 +80,7 @@ Since the log-likelihood is a sum over individual training examples, we can focu
 
 The derivative of the first term \(y^{(i)} \log \sigma(\boldsymbol\theta^\top x^{(i)})\) is:
 
-\newpage
+
 \[
     \frac{\partial}{\partial \boldsymbol\theta_j} \left( y^{(i)} \log \sigma(\boldsymbol\theta^\top x^{(i)}) \right)
     = y^{(i)} \cdot \frac{1}{\sigma(\boldsymbol\theta^\top x^{(i)})} \cdot \sigma'(\boldsymbol\theta^\top x^{(i)}) \cdot x_j^{(i)}
@@ -152,6 +161,7 @@ Solving for \( \theta^* \), we obtain:
     \boldsymbol\theta^* = (X^\top X + \lambda \boldsymbol I)^{-1} X^\top \boldsymbol y
 \]
 
+\newpage
 
 \section*{Problem 1.3: Poisson Distribution and Generalized Linear Model (GLM)}
 
@@ -241,6 +251,61 @@ We can take the derivative term-by-term:
 \end{itemize}
 
 2. Derivative of the second term \( - \log \left( \sum_{j=1}^K e^{\theta_j^\top x^{(i)}} \right) \)
+\[
+    \frac{\partial}{\partial \theta_l} \left( - \log \left( \sum_{j=1}^K e^{\theta_j^\top x^{(i)}} \right) \right) = - \frac{1}{\sum_{j=1}^K e^{\theta_j^\top x^{(i)}}} \cdot \frac{\partial}{\partial \theta_l} \left( \sum_{j=1}^K e^{\theta_j^\top x^{(i)}} \right)
+\]
+\[
+    = - \frac{1}{\sum_{j=1}^K e^{\theta_j^\top x^{(i)}}} \cdot  e^{\theta_l^\top x^{(i)}} \cdot x^{(i)} = - P(y = l \mid x^{(i)}; \Theta) \cdot x^{(i)}
+\]
+
+So for each class \(l\), the gradient of the log-likelihood with respect to \(\theta_l\) is:
+\[
+    \nabla_{\boldsymbol\theta_l}\ell(\boldsymbol{\Theta}) = \sum_{i=1}^m \left( \mathbf{1}\{ y^{(i)} = l \} - P(y = l \mid x^{(i)}; \Theta) \right) x^{(i)}
+\]
+
+Where:
+\begin{itemize}
+    \item \( \mathbf{1}\{ y^{(i)} = l \} \) is 1 if the \( i \)-th example belongs to class \( l \), and 0 otherwise.
+    \item \( P(y = l \mid x^{(i)}; \Theta) = \frac{e^{\theta_l^\top x^{(i)}}}{\sum_{j=1}^K e^{\theta_j^\top x^{(i)}}} \) is the softmax probability.
+\end{itemize}
+
+\newpage
+
+\section*{Problem 1.5: Maximun Likelihood Estimation}
+
+\subsection*{(a) the Expression of Conditional Distribution}
+
+The conditional distribution of \( y \) given \(\boldsymbol x \) is the distribution of \( y - \boldsymbol\theta^\top \boldsymbol x \), which is simply the distribution of the error term \( \epsilon \). Hence, the conditional distribution of \( y \) given \( x \) is:
+\[
+    P_{Y|X}(y|\boldsymbol x; \boldsymbol\theta) = \frac{1}{2\tau} \exp\left( -\frac{|y - \boldsymbol\theta^\top \boldsymbol x|}{\tau} \right)
+\]
+
+\subsection*{(b) the Log-Likelihood Function}
+
+Given the conditional probability \( P_{Y|X}(y|\boldsymbol x; \boldsymbol\theta) \), 
+the log-likelihood for \( m \) samples \( \{(x^{(i)}, y^{(i)})\}_{i=1}^m \) can be written as:
+\[
+    \ell(\boldsymbol\theta) = \sum_{i=1}^m \log P_{Y|X}(y^{(i)} | x^{(i)}; \boldsymbol\theta) =  \sum_{i=1}^m \log \left( \frac{1}{2\tau} \exp\left( -\frac{|y^{(i)} - \boldsymbol\theta^\top x^{(i)}|}{\tau} \right) \right)
+\]
+\[
+    =  \sum_{i=1}^m \left( \log \left( \frac{1}{2\tau} \right) - \frac{|y^{(i)} - \boldsymbol\theta^\top x^{(i)}|}{\tau} \right) 
+\]
+\[
+    =  -m \log(2\tau) - \frac{1}{\tau} \sum_{i=1}^m |y^{(i)} - \boldsymbol\theta^\top x^{(i)}|
+\]
+
+\subsection*{(c) the Geometric Interpretation of LAD}
+
+In ordinary least squares (OLS) regression, we minimize the sum of the squared distances between the predicted and actual values, effectively finding a line that minimizes the \(\textbf{squared Euclidean distance}\) between the points and the regression line. This gives the usual \( \ell_2 \)-norm, which is sensitive to outliers because outliers have a disproportionately large influence due to the squaring of distances.
+
+In least absolute deviation(LAD) regression, we minimize the sum of the absolute deviations \( |y^{(i)} - \theta^\top x^{(i)}| \), which corresponds to the \( \ell_1 \)-norm.
+
+The geometric interpretation of LAD is that instead of minimizing the Euclidean distance, we are minimizing the \(\textbf{Manhattan distance}\), or the \(\textbf{vertical distances}\) between the data points and the regression line. 
+
+This results in a model that is more \(\textbf{robust to outliers}\) because outliers have a linear influence on the objective function, as opposed to a quadratic influence in OLS.
 
 
+\newpage
+\bibliographystyle{plain}  % 使用plain样式来展示参考文献
+\bibliography{references}   % references.bib 是存放参考文献条目的文件
 \end{document}
