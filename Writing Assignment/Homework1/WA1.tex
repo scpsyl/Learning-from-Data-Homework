@@ -212,6 +212,35 @@ Thus, we can conclude that:
 
 \section*{Problem 1.4: Softmax Regression}
 
+The Softmax model's log-likelihood function is given by:
+\[
+\ell(\boldsymbol\Theta) \triangleq \sum_{i=1}^m \log p(y^{(i)} | x^{(i)}; \boldsymbol\Theta) = \sum_{i=1}^m \sum_{l=1}^K \mathbf{1}\{ y^{(i)} = l \} \log \frac{e^{\boldsymbol\theta_l^\top x^{(i)}}}{\sum_{j=1}^K e^{\boldsymbol\theta_j^\top x^{(i)}}}
+\]
+
+We can express the log-likelihood function in terms of the indicator function and the softmax probabilities:
+\[
+p(y^{(i)} = l \mid x^{(i)}; \boldsymbol\Theta) = \frac{e^{\boldsymbol\theta_l^\top x^{(i)}}}{\sum_{j=1}^K e^{\boldsymbol\theta_j^\top x^{(i)}}}
+\]
+
+The full log-likelihood can be written as:
+\[
+\ell(\Theta) = \sum_{i=1}^m \log \left( \frac{e^{\theta_{y^{(i)}}^\top x^{(i)}}}{\sum_{j=1}^K e^{\theta_j^\top x^{(i)}}} \right)= \sum_{i=1}^m \left( \theta_{y^{(i)}}^\top x^{(i)} - \log \left( \sum_{j=1}^K e^{\theta_j^\top x^{(i)}} \right) \right)
+\]
+
+What we need to calculate is:
+\[
+    \nabla_{\boldsymbol\theta_l}\ell(\boldsymbol{\Theta}) =  \sum_{i=1}^m \frac{\partial}{\partial \theta_l} \left( \theta_{y^{(i)}}^\top x^{(i)} - \log \left( \sum_{j=1}^K e^{\theta_j^\top x^{(i)}} \right) \right)
+\]
+We can take the derivative term-by-term:
+
+1. Derivative of the first term\( \theta_{y^{(i)}}^\top x^{(i)} \)
+
+\begin{itemize}
+    \item For \( l = y^{(i)} \), \( \frac{\partial}{\partial \theta_l} \theta_{y^{(i)}}^\top x^{(i)} = x^{(i)} \).
+    \item For \( l \neq y^{(i)} \), \( \frac{\partial}{\partial \theta_l} \theta_{y^{(i)}}^\top x^{(i)} = 0 \).
+\end{itemize}
+
+2. Derivative of the second term \( - \log \left( \sum_{j=1}^K e^{\theta_j^\top x^{(i)}} \right) \)
 
 
 \end{document}
