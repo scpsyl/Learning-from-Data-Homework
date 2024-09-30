@@ -11,6 +11,8 @@
 \usepackage{graphicx}
 \usepackage{fancyhdr}
 \usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{url}
 
 
 
@@ -34,7 +36,7 @@
 
 \begin{titlepage}
     \begin{center}
-        % 插入图标
+        % Insert logo
         \includegraphics[width=5cm]{tsinghua_logo.png}\\[4cm]  % 插入图标并设置下方间距
         {\Huge Writing Assignment 1} \\[2cm]
         {\large Yushan Liu  \ \  Student ID: 2024214103}\\[6cm]
@@ -91,8 +93,8 @@ The derivative of the first term \(y^{(i)} \log \sigma(\boldsymbol\theta^\top x^
 
 The derivative of the second term \((1 - y^{(i)}) \log(1 - \sigma(\boldsymbol\theta^\top x^{(i)}))\) is:
 \[
-\frac{\partial}{\partial \boldsymbol\theta_j} \left( (1 - y^{(i)}) \log(1 - \sigma(\boldsymbol\theta^\top x^{(i)})) \right)
-= (1 - y^{(i)}) \cdot \frac{-1}{1 - \sigma(\boldsymbol\theta^\top x^{(i)})} \cdot (-\sigma'(\boldsymbol\theta^\top x^{(i)})) \cdot x_j^{(i)}
+    \frac{\partial}{\partial \boldsymbol\theta_j} \left( (1 - y^{(i)}) \log(1 - \sigma(\boldsymbol\theta^\top x^{(i)})) \right)
+    = (1 - y^{(i)}) \cdot \frac{-1}{1 - \sigma(\boldsymbol\theta^\top x^{(i)})} \cdot (-\sigma'(\boldsymbol\theta^\top x^{(i)})) \cdot x_j^{(i)}
 \]
 \[
     = (1 - y^{(i)}) \cdot (- \sigma(\boldsymbol\theta^\top x^{(i)})) \cdot x_j^{(i)}
@@ -105,7 +107,7 @@ Then combine the two terms and simplify, we have:
 
 Summing over all training examples \(i = 1, \ldots, m\), we obtain the desired result:
 \[
-\frac{\partial \ell(\boldsymbol\theta)}{\partial \boldsymbol\theta_j} = \sum_{i=1}^{m} \left( y^{(i)} - \sigma(\boldsymbol\theta^\top x^{(i)}) \right) x_j^{(i)}
+    \frac{\partial \ell(\boldsymbol\theta)}{\partial \boldsymbol\theta_j} = \sum_{i=1}^{m} \left( y^{(i)} - \sigma(\boldsymbol\theta^\top x^{(i)}) \right) x_j^{(i)}
 \]
 
 \section*{Problem 1.2: Ridge Regression}
@@ -114,29 +116,29 @@ Summing over all training examples \(i = 1, \ldots, m\), we obtain the desired r
 
 We are given the ridge regression loss function:
 \[
-J(\boldsymbol\theta) \triangleq \| \boldsymbol y - X \boldsymbol\theta \|^2 + \lambda \|\boldsymbol\theta\|^2
+    J(\boldsymbol\theta) \triangleq \| \boldsymbol y - X \boldsymbol\theta \|^2 + \lambda \|\boldsymbol\theta\|^2
 \]
 
 To compute the gradient with respect to \( \theta \), we first note that the loss function can be expanded as:
 \[
-J(\boldsymbol\theta) = (\boldsymbol y - X\boldsymbol\theta)^\top (y - X\boldsymbol\theta) + \lambda \boldsymbol\theta^\top \boldsymbol\theta
+    J(\boldsymbol\theta) = (\boldsymbol y - X\boldsymbol\theta)^\top (y - X\boldsymbol\theta) + \lambda \boldsymbol\theta^\top \boldsymbol\theta
 \]
 
 Now, differentiating \( J(\boldsymbol\theta) \) with respect to \( \boldsymbol\theta \), we get:
 \[
-\nabla_{\boldsymbol\theta} J(\boldsymbol\theta) = -2X^\top(\boldsymbol y - X \boldsymbol\theta) + 2\lambda\boldsymbol\theta
+    \nabla_{\boldsymbol\theta} J(\boldsymbol\theta) = -2X^\top(\boldsymbol y - X \boldsymbol\theta) + 2\lambda\boldsymbol\theta
 \]
 
 Thus, the gradient is:
 \[
-\nabla_{\boldsymbol\theta} J(\boldsymbol\theta) = 2X^\top X \boldsymbol\theta - 2X^\top \boldsymbol y + 2\lambda \boldsymbol\theta
+    \nabla_{\boldsymbol\theta} J(\boldsymbol\theta) = 2X^\top X \boldsymbol\theta - 2X^\top \boldsymbol y + 2\lambda \boldsymbol\theta
 \]
 
 \subsection*{(b) Gradient Descent Update Rule}
 
 Using the gradient computed above, the update rule for gradient descent is:
 \[
-\theta_{t+1} \colon= \theta_{t} + \alpha \nabla_\theta J(\theta)
+    \theta_{t+1} \colon= \theta_{t} + \alpha \nabla_\theta J(\theta)
 \]
 
 Substituting the gradient, we have:
@@ -148,12 +150,12 @@ Substituting the gradient, we have:
 
 The optimal parameter \( \boldsymbol\theta^* \) can be derived by setting the gradient to zero:
 \[
-2X^\top X \boldsymbol\theta^* - 2X^\top \boldsymbol y + 2\lambda \boldsymbol\theta^* = 0
+    2X^\top X \boldsymbol\theta^* - 2X^\top \boldsymbol y + 2\lambda \boldsymbol\theta^* = 0
 \]
 
 Simplifying, we get the normal equation:
 \[
-(X^\top X +\lambda \boldsymbol I)\boldsymbol\theta^* = X^\top \boldsymbol y
+    (X^\top X +\lambda \boldsymbol I)\boldsymbol\theta^* = X^\top \boldsymbol y
 \]
 
 Solving for \( \theta^* \), we obtain:
@@ -169,18 +171,18 @@ Solving for \( \theta^* \), we obtain:
 
 The probability mass function of the Poisson distribution is given by:
 \[
-p(y \mid \lambda) = \frac{\lambda^y e^{-\lambda}}{y!}
+    p(y \mid \lambda) = \frac{\lambda^y e^{-\lambda}}{y!}
 \]
 
 We have knowed that a class of distributions is in the exponential family if its density can be
 written in the canonical form:
 \[
-p(y \mid \eta) = h(y) \exp\left( \eta T(y) - a(\eta) \right)
+    p(y \mid \eta) = h(y) \exp\left( \eta T(y) - a(\eta) \right)
 \]
 
 Rewriting in the exponential family form for the Poisson distribution, we have:
 \[
-p(y \mid \eta) = \frac{1}{y!} \exp\left( \eta y - e^{\eta} \right)
+    p(y \mid \eta) = \frac{1}{y!} \exp\left( \eta y - e^{\eta} \right)
 \]
 
 We can see that:
@@ -202,7 +204,7 @@ From solving \textbf{(a)}, we know that:
 
 By deriving hypothesis function from the exponential family form, we have:
 \[
-h_\theta(x) = E[T(y)|x; \theta]= \lambda = \eta
+    h_\theta(x) = E[T(y)|x; \theta]= \lambda = \eta
 \]
 
 To adopt linear model \(\eta = \theta^T x\), we have:
@@ -229,7 +231,7 @@ The Softmax model's log-likelihood function is given by:
 
 We can express the log-likelihood function in terms of the indicator function and the softmax probabilities:
 \[
-p(y^{(i)} = l \mid x^{(i)}; \boldsymbol\Theta) = \frac{e^{\boldsymbol\theta_l^\top x^{(i)}}}{\sum_{j=1}^K e^{\boldsymbol\theta_j^\top x^{(i)}}}
+    p(y^{(i)} = l \mid x^{(i)}; \boldsymbol\Theta) = \frac{e^{\boldsymbol\theta_l^\top x^{(i)}}}{\sum_{j=1}^K e^{\boldsymbol\theta_j^\top x^{(i)}}}
 \]
 
 The full log-likelihood can be written as:
@@ -305,7 +307,21 @@ The geometric interpretation of LAD is that instead of minimizing the Euclidean 
 This results in a model that is more \(\textbf{robust to outliers}\) because outliers have a linear influence on the objective function, as opposed to a quadratic influence in OLS.
 
 
-% \newpage
-% \bibliographystyle{plain}  % 使用plain样式来展示参考文献
-% \bibliography{references}   % references.bib 是存放参考文献条目的文件
+\newpage
+\begin{thebibliography}{99}
+
+    \bibitem{CCS229LectureNotes}
+    Andrew Ng, Tengyu Ma. \textit{CCS 229 Lecture Notes}. Stanford University, 2023. Available online at: \url{{https://cs229.stanford.edu/}}
+    
+    \bibitem{ConvexOptimization}
+    Stephen Boyd, Lieven Vandenberghe. \textit{Convex Optimization}. Cambridge University Press, 2004.
+    
+    \bibitem{ChatGPT}
+    OpenAI. \textit{ChatGPT: A Conversational AI}. 2023. Available online at: \url{{https://www.openai.com/chatgpt}}
+    
+    \bibitem{chung2001stochastic}
+    K. L. Chung. \textit{Stochastic Processes}. 2nd ed. Springer, 2001.
+
+    \end{thebibliography}
+    
 \end{document}
