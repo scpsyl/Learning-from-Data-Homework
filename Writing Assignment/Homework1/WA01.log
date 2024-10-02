@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.10.2)  2 OCT 2024 21:07
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.10.2)  2 OCT 2024 21:57
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -276,8 +276,7 @@ File: l3backend-xetex.def 2024-02-20 L3 backend support: XeTeX
 \g__pdf_backend_object_int=\count290
 \g__pdf_backend_annotation_int=\count291
 \g__pdf_backend_link_int=\count292
-)
-No file WA01.aux.
+) (./WA01.aux)
 \openout1 = `WA01.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
@@ -290,7 +289,7 @@ LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
 LaTeX Font Info:    ... okay on input line 35.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 35.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 35.
-(d:/texlive/2024/texmf-dist/tex/latex/base/ts1cmr.fd
+ (d:/texlive/2024/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 35.
@@ -340,15 +339,13 @@ LaTeX Font Info:    ... okay on input line 35.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring OFF on input line 35.
+(./WA01.out) (./WA01.out)
 \@outlinefile=\write3
 \openout3 = `WA01.out'.
 
-
-Package hyperref Warning: Rerun to get /PageLabels entry.
-
 File: tsinghua_logo.png Graphic file (type bmp)
 <tsinghua_logo.png>
-[1
+ [1
 
 ]
 LaTeX Font Info:    Trying to load font information for U+msa on input line 52.
@@ -368,24 +365,14 @@ Overfull \hbox (40.47383pt too wide) in paragraph at lines 287--289
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `WA01.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `WA01.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
+Package rerunfilecheck Info: File `WA01.out' has not changed.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 10405 strings out of 474773
- 159155 string characters out of 5761289
+ 10413 strings out of 474773
+ 159251 string characters out of 5761289
  1931842 words of memory out of 5000000
- 32418 multiletter control sequences out of 15000+600000
+ 32420 multiletter control sequences out of 15000+600000
  565947 words of font info for 77 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  72i,12n,79p,458b,345s stack positions out of 10000i,1000n,20000p,200000b,200000s
