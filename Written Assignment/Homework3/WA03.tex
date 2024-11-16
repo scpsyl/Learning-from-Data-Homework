@@ -14,8 +14,23 @@
 \usepackage{url}
 \usepackage{listings}
 \usepackage{float}
+\usepackage{xcolor}
 
-
+% 配置代码块样式
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{green!50!black},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    frame=single,
+    breaklines=true,
+    backgroundcolor=\color{gray!10},
+    showstringspaces=false,
+    captionpos=b % 让代码标题出现在代码下方
+}
 
 
 % Page margins
@@ -44,8 +59,7 @@
         {\normalsize \today}\\[1cm]
 
         \vfill
-        \text{All the tasks in this WA is done entirely by MYSELF.}\\
-        \text{The source code for 3.4(b) can be found at: \texttt{Task3-4-b.ipynb}}
+        \text{All the tasks in this WA is done entirely by MYSELF.}
         
     \end{center}
 \end{titlepage}
@@ -420,7 +434,7 @@ The eigenvector corresponding to the second smallest eigenvalue (known as the Fi
 \end{itemize}
 
 We can use the Python lib \texttt{numpy} and \texttt{scipy.linalg.eigh} to compute the results below.
-The code and the output are shown by \texttt{Task-3-4-b.ipynb}.
+The code and the output are shown by \texttt{Appendix}.
 
 We can know that :
 
@@ -458,5 +472,71 @@ By using the Fiedler vector, we can partition the graph into two clusters:
     \item Cluster 2: \{5, 6, 7\}
 \end{itemize}
 
+\newpage
+\begin{thebibliography}{99}
+
+    \bibitem{CCS229LectureNotes}
+    Andrew Ng, Tengyu Ma. \textit{CCS 229 Lecture Notes}. Stanford University, 2023. Available online at: \url{{https://cs229.stanford.edu/}}
+    
+    \bibitem{ConvexOptimization}
+    Stephen Boyd, Lieven Vandenberghe. \textit{Convex Optimization}. Cambridge University Press, 2004.
+    
+    \bibitem{ChatGPT}
+    OpenAI. \textit{ChatGPT: A Conversational AI}. 2023. Available online at: \url{{https://www.openai.com/chatgpt}}
+    
+    \bibitem{chung2001stochastic}
+    K. L. Chung. \textit{Stochastic Processes}. 2nd ed. Springer, 2001.
+
+\end{thebibliography}
+
+\newpage
+\appendix
+\section*{Appendix: Source Code}
+
+Below is the Python source code used to compute Task3-4(b) :
+
+\begin{lstlisting}[caption=Python Source Code for Spectral Clustering]
+    import numpy as np
+    from scipy.linalg import eigh
+    
+    # Step 1: Define the adjacency matrix (A) and the degree matrix (D)
+    A = np.array([
+        [0, 1, 1, 0, 0, 0, 0],
+        [1, 0, 1, 0, 0, 0, 0],
+        [1, 1, 0, 1, 0, 0, 0],
+        [0, 0, 1, 0, 1, 0, 0],
+        [0, 0, 0, 1, 0, 1, 1],
+        [0, 0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0]
+    ])
+    
+    D = np.diag(np.sum(A, axis=1))
+    print("Degree Matrix (D):\n", D)
+
+    # Step 2: Compute the unnormalized Laplacian (L)
+    L = D - A
+    print("\nUnnormalized Laplacian (L):\n", L)
+
+    # Step 3: Compute the normalized Laplacian (L_norm)
+    D_inv_sqrt = np.diag(1 / np.sqrt(np.diag(D)))
+    print("\nD_inv_sqrt:\n", D_inv_sqrt)
+    L_norm = D_inv_sqrt @ L @ D_inv_sqrt
+    print("\nNormalized Laplacian (L_norm):\n", L_norm)
+
+    # Step 4: Compute eigenvalues and eigenvectors of L_norm
+    eigvals, eigvecs = eigh(L_norm)
+    print("Eigenvalues:\n", eigvals)
+    print("\nEigenvectors:\n", eigvecs)
+
+    # Step 5: Use the Fiedler vector to partition the graph
+    fiedler_vector = eigvecs[:, 1]  # Second smallest eigenvector
+    print("\nFiedler Vector (Second Smallest Eigenvector):\n", fiedler_vector)
+
+    partition_1 = np.where(fiedler_vector >= 0)[0] + 1  # Nodes in Partition 1
+    partition_2 = np.where(fiedler_vector < 0)[0] + 1   # Nodes in Partition 2
+
+    print("\nPartition 1:", partition_1)
+    print("Partition 2:", partition_2)
+\end{lstlisting}
 
 \end{document}
