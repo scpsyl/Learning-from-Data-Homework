@@ -44,7 +44,9 @@
         {\normalsize \today}\\[1cm]
 
         \vfill
-        \text{All the tasks in this WA is done entirely by MYSELF.}
+        \text{All the tasks in this WA is done entirely by MYSELF.}\\
+        \text{The source code for 3.4(b) can be found at: \texttt{Task3-4-b.ipynb}}
+        
     \end{center}
 \end{titlepage}
 
@@ -297,6 +299,164 @@ So minimizing the within-cluster sum of squares (WSS) is equivalent to maximizin
 
 \subsection*{3.4 Spectral Clustering}
 
+\subsubsection*{(a)}
+
+We have known that for subgraphs $A$ and $B$, the Ratiocut and Ncut are defined as:
+
+\[
+    \text{RatioCut}(A, B) = \frac{\text{Cut}(A, B)}{|A|} + \frac{\text{Cut}(A, B)}{|B|},
+\]
+\[
+   \text{NCut}(A, B) = \frac{\text{Cut}(A, B)}{\text{vol}(A)} + \frac{\text{Cut}(A, B)}{\text{vol}(B)},
+\]
+
+Under the Partition1, 
+\begin{itemize}
+    \item Subgraph \( A = \{1, 2, 3\} \),
+    \item Subgraph \( B = \{4, 5, 6, 7\} \).
+\end{itemize}
+
+So the cut value is $\text{Cut}(\{1, 2, 3\}, \{4, 5, 6, 7\}) = 1$. 
+
+The Ratiocut is:
+
+\[\frac{1}{|A|} + \frac{1}{|B|} = \frac{1}{3} + \frac{1}{4} = \frac{7}{12}\]
+
+\begin{itemize}
+    \item \( \text{vol}(A) = 2 + 2 + 3 = 7 \),
+    \item \( \text{vol}(B) = 2 + 3 + 1 + 1 = 7 \).
+\end{itemize}
+
+So the Ncut is:
+
+\[
+\frac{1}{\text{vol}(A)} + \frac{1}{\text{vol}(B)} = \frac{1}{7} + \frac{1}{7} = \frac{2}{7}
+\]
+
+Under the Partition2,
+\begin{itemize}
+    \item Subgraph \( A = \{1, 2, 3, 4\} \),
+    \item Subgraph \( B = \{5, 6, 7\} \).
+\end{itemize}
+
+So the cut value is $\text{Cut}(\{1, 2, 3, 4\}, \{5, 6, 7\}) = 1$.
+
+The Ratiocut is:
+
+\[
+ \frac{1}{|A|} + \frac{1}{|B|} = \frac{1}{4} + \frac{1}{3} = \frac{7}{12}
+\]
+
+\begin{itemize}
+    \item \( \text{vol}(A) = 2 + 2 + 3 + 2 = 9 \),
+    \item \( \text{vol}(B) = 3 + 1 + 1 = 5 \).
+\end{itemize}
+
+So the Ncut is:
+
+\[
+\frac{1}{\text{vol}(A)} + \frac{1}{\text{vol}(B)} = \frac{1}{9} + \frac{1}{5} = \frac{14}{45}
+\]
+
+For RatioCut, both partitions yield the same value (\( \frac{7}{12} \)). 
+However, for NCut, the partition along edge (4,5) yields a smaller value (\( \frac{14}{45} \)), indicating a better partition.
+
+
+\subsubsection*{(b)}
+
+\subsubsection*{Step 1: $D$ and $A$}
+
+The Adjacency Matrix $A$ is:
+
+\[
+    A =
+    \begin{bmatrix}
+    0 & 1 & 1 & 0 & 0 & 0 & 0 \\
+    1 & 0 & 1 & 0 & 0 & 0 & 0 \\
+    1 & 1 & 0 & 1 & 0 & 0 & 0 \\
+    0 & 0 & 1 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 1 & 1 \\
+    0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 1 & 0 & 0
+    \end{bmatrix}
+\]
+
+The Degree Matrix $D$ is:
+
+\[
+    D =
+    \begin{bmatrix}
+    2 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    0 & 2 & 0 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 3 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 2 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 3 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 0 & 1
+    \end{bmatrix}
+\]
+
+\subsubsection*{Step 2: Compute $L$}
+
+The Laplacian Matrix $L$ is defined as $L = D - A$
+
+\subsubsection*{Step 3: Compute $L_{\text{norm}}$}
+
+The normalized Laplacian matrix is given by:
+\[
+L_{\text{norm}} = D^{-1/2} L D^{-1/2}.
+\]
+
+\subsubsection*{Step 4: Compute Eigenvalues and Eigenvectors}
+
+Perform eigen decomposition on \(L_{\text{norm}}\) to obtain its eigenvalues and eigenvectors.
+
+\subsubsection*{Step 5: Partition by Using the Fiedler Vector}
+
+The eigenvector corresponding to the second smallest eigenvalue (known as the Fiedler vector) is used to partition the graph:
+\begin{itemize}
+    \item Assign nodes with positive values in the Fiedler vector to one cluster.
+    \item Assign nodes with negative values to the other cluster.
+\end{itemize}
+
+We can use the Python lib \texttt{numpy} and \texttt{scipy.linalg.eigh} to compute the results below.
+The code and the output are shown by \texttt{Task-3-4-b.ipynb}.
+
+We can know that :
+
+Eigenvalues:
+\[
+\begin{bmatrix}
+1.11 \times 10^{-15}, & 0.149, & 0.871, & 1.0, & 1.5, & 1.537, & 1.943
+\end{bmatrix}
+\]
+
+Eigenvectors:
+\[
+\begin{bmatrix}
+-0.378 & -0.407 &  0.325 &  0.0   &  0.707 &  0.286 & -0.063 \\
+-0.378 & -0.407 &  0.325 & -0.0   & -0.707 &  0.286 & -0.063 \\
+-0.463 & -0.350 & -0.295 &  0.0   &  0.0   & -0.726 &  0.222 \\
+-0.378 &  0.086 & -0.743 & -0.0   &  0.0   &  0.383 & -0.388 \\
+-0.463 &  0.529 &  0.060 & -0.0   &  0.0   &  0.222 &  0.673 \\
+-0.267 &  0.359 &  0.270 & -0.707 &  0.0   & -0.239 & -0.412 \\
+-0.267 &  0.359 &  0.270 &  0.707 &  0.0   & -0.239 & -0.412
+\end{bmatrix}
+\]
+
+So the Fiedler vector is:
+
+\[
+\begin{bmatrix}
+-0.407 \\ -0.407 \\ -0.350 \\ 0.086 \\ 0.529 \\ 0.359 \\ 0.359
+\end{bmatrix}
+\]
+
+By using the Fiedler vector, we can partition the graph into two clusters:
+\begin{itemize}
+    \item Cluster 1: \{1, 2, 3, 4\}
+    \item Cluster 2: \{5, 6, 7\}
+\end{itemize}
 
 
 \end{document}

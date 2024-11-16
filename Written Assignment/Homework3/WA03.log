@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.10.2)  16 NOV 2024 00:57
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.10.2)  16 NOV 2024 22:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -299,7 +299,8 @@ File: l3backend-xetex.def 2024-02-20 L3 backend support: XeTeX
 \g__pdf_backend_object_int=\count299
 \g__pdf_backend_annotation_int=\count300
 \g__pdf_backend_link_int=\count301
-) (./WA03.aux)
+)
+No file WA03.aux.
 \openout1 = `WA03.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
@@ -312,7 +313,7 @@ LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
 LaTeX Font Info:    ... okay on input line 36.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 36.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 36.
- (d:/texlive/2024/texmf-dist/tex/latex/base/ts1cmr.fd
+(d:/texlive/2024/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 36.
@@ -362,41 +363,50 @@ LaTeX Font Info:    ... okay on input line 36.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring OFF on input line 36.
-(./WA03.out) (./WA03.out)
 \@outlinefile=\write3
 \openout3 = `WA03.out'.
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
 
 \c@lstlisting=\count302
 File: tsinghua_logo.png Graphic file (type bmp)
 <tsinghua_logo.png>
- [1
+[1
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 54.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 56.
  (d:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 54.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 56.
  (d:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1]
 Missing character: There is no 。 ("3002) in font cmr12!
 Missing character: There is no 。 ("3002) in font cmr12!
-[2] [3] [4] [5] (./WA03.aux)
+[2] [3] [4] [5] [6] [7] (./WA03.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
-Package rerunfilecheck Info: File `WA03.out' has not changed.
-(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+
+
+Package rerunfilecheck Warning: File `WA03.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `WA03.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 11618 strings out of 474773
- 177160 string characters out of 5761289
- 1933842 words of memory out of 5000000
- 33631 multiletter control sequences out of 15000+600000
- 563130 words of font info for 62 fonts, out of 8000000 for 9000
+ 11622 strings out of 474773
+ 177341 string characters out of 5761289
+ 1935842 words of memory out of 5000000
+ 33635 multiletter control sequences out of 15000+600000
+ 563154 words of font info for 65 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  72i,12n,79p,242b,345s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on WA03.pdf (6 pages).
+Output written on WA03.pdf (8 pages).
